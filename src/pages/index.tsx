@@ -6,7 +6,9 @@ import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
-import Header from '../components/Header';
+import { Header } from '../components/Header';
+import { TravelTypes } from '../components/TravelTypes';
+import { Divider } from '../components/Divider';
 
 interface Post {
   uid?: string;
@@ -41,8 +43,8 @@ export default function Home({ continents }: ContinentProps) {
   return (
     <Flex direction="column" w="100%" h="100%">
       <Header />
-      {/* <TravelTypes /> */}
-      {/* <Divider /> */}
+      {/* <TravelTypes />
+      <Divider /> */}
       <Heading
         fontWeight="500"
         fontSize={['xl', '2xl', '3xl', '4xl']}
@@ -55,7 +57,7 @@ export default function Home({ continents }: ContinentProps) {
         Vamos nessa? <br /> Então escolha seu continente
       </Heading>
 
-      <Slider continents={continents} />
+      {/* <Slider continents={continents} /> */}
     </Flex>
   );
 }
