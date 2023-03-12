@@ -9,6 +9,7 @@ import styles from './home.module.scss';
 import { Header } from '../components/Header';
 import { TravelTypes } from '../components/TravelTypes';
 import { Divider } from '../components/Divider';
+import { Banner } from '../components/Banner';
 
 interface Post {
   uid?: string;
@@ -43,10 +44,11 @@ export default function Home({ continents }: ContinentProps) {
   return (
     <Flex direction="column" w="100%" h="100%">
       <Header />
-      {/* <TravelTypes />
-      <Divider /> */}
+      <Banner />
+      {/* <TravelTypes /> */}
+      {/* <Divider /> */}
       <Heading
-        fontWeight="500"
+        fontWeight="400"
         fontSize={['xl', '2xl', '3xl', '4xl']}
         lineHeight={['30px', '54px']}
         textAlign="center"
