@@ -1,31 +1,12 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Banner } from '../components/Banner';
+import { Divider } from '../components/Divider';
+import { Header } from '../components/Header';
+import { TravelTypes } from '../components/TravelTypes';
+import { Slider } from '../components/Slider';
 import { GetStaticProps } from 'next';
-
-import { Flex, Heading, Slider, useColorModeValue } from '@chakra-ui/react';
-import { getPrismicClient } from '../services/prismic';
-
-import commonStyles from '../styles/common.module.scss';
-import styles from './home.module.scss';
-import Header from '../components/Header';
-
-interface Post {
-  uid?: string;
-  first_publication_date: string | null;
-  data: {
-    title: string;
-    subtitle: string;
-    author: string;
-  };
-}
-
-interface PostPagination {
-  next_page: string;
-  results: Post[];
-}
-
-interface HomeProps {
-  postsPagination: PostPagination;
-}
+import Prismic from '@prismicio/client';
+import { getPrimiscClient } from '../services/prismic';
 
 export interface ContinentProps {
   continents: {
@@ -41,8 +22,9 @@ export default function Home({ continents }: ContinentProps) {
   return (
     <Flex direction="column" w="100%" h="100%">
       <Header />
-      {/* <TravelTypes /> */}
-      {/* <Divider /> */}
+      <Banner />
+      <TravelTypes />
+      <Divider />
       <Heading
         fontWeight="500"
         fontSize={['xl', '2xl', '3xl', '4xl']}
@@ -59,9 +41,27 @@ export default function Home({ continents }: ContinentProps) {
     </Flex>
   );
 }
-// export const getStaticProps = async () => {
-//   // const prismic = getPrismicClient({});
-//   // const postsResponse = await prismic.getByType(TODO);
 
-//   // TODO
-// };
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrimiscClient();
+
+  const response = await prismic.query<any>([
+    Prismic.Predicates.at('document.type', 'continent'),
+  ]);
+
+  const continents = response.results.map(continent => {
+    return {
+      slug: continent.uid,
+      title: continent.data.title,
+      summary: continent.data.summary,
+      image: continent.data.slider_image.url,
+    };
+  });
+
+  return {
+    props: {
+      continents,
+    },
+    revalidate: 1000,
+  };
+};
