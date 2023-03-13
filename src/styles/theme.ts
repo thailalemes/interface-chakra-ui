@@ -1,18 +1,22 @@
 import { extendTheme } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 
 export const theme = extendTheme({
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: false,
+  },
   colors: {
+    yellow: {
+      '400': '#FFBA08',
+      '300': 'rgb(255, 186, 8, 0.5)',
+    },
     gray: {
-      '900': '#181B23',
-      '800': '#1F2029',
-      '700': '#353646',
-      '600': '#4B4B63',
-      '500': '#616480',
-      '400': '#797D9A',
-      '300': '#9699B0',
-      '200': '#B3B5C6',
-      '100': '#D1D2DC',
-      '50': '#EEEEF2',
+      '700': '#47585B',
+      '500': '#999999',
+      '400': ' rgb(153,153,153, 0.5)',
+      '200': '#DADADA',
+      '50': '#F5F8FA',
     },
   },
   fonts: {
@@ -20,11 +24,11 @@ export const theme = extendTheme({
     body: 'Poppins',
   },
   styles: {
-    global: {
+    global: props => ({
       body: {
-        bg: '',
-        color: '',
+        bg: mode('gray.50', 'gray.800')(props),
+        color: 'gray.700',
       },
-    },
+    }),
   },
 });
